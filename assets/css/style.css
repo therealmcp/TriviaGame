@@ -1,0 +1,26 @@
+h2 {
+    text-align: center;
+}
+
+.title {
+    text-align: center;
+}
+
+.container {
+    background: rgb(163, 161, 161);
+    height: 100%;
+}
+
+.questions {
+    text-align: center;
+    background: rgb(109, 109, 156);
+    font-size: 34px;
+}
+
+.row {
+    text-align: center;
+    align-self: center;
+    font-size: 26px;
+    background: rgb(109, 109, 156);
+    margin: 5%;
+}
