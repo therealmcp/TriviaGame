@@ -1,5 +1,6 @@
 // Add doc.ready from jquery
-
+$(document).ready(function() {
+    
 // Global variables
 var questionTimer = 10;
 var answerTimer = 5;
@@ -29,7 +30,7 @@ var randQuestion = questions[Math.floor(Math.random() * questions.length)];
 // Pull rand question from array once it's been used.
 
 // Array of the answers for the question chosen and displayed by program
-// Using slice to return a copy of answer array
+// using slice to return a copy of answer array
 var questAnswers = randQuestion.answers.slice(0);
 
 // Shuffle an array
@@ -58,14 +59,10 @@ var showQuestion = function() {
     $("#secondChoice").attr("value", newAnswers[1]).text(newAnswers[1]);
     $("#thirdChoice").attr("value", newAnswers[2]).text(newAnswers[2]);
     $("#fourthChoice").attr("value", newAnswers[3]).text(newAnswers[3]);
-    /* for (i = 0; i > newAnswers.length; i++) {
-
-        $(``)
-
+/*     for (i = 0; i > newAnswers.length; i++) {
         var button = $(".btn").text()
         if(newAnswers[i] === randQuestion.answers[0]) {
             var correctButton = button;
-            console.log(button);
         }
     } */
     timerQ;
@@ -86,28 +83,22 @@ $(".btn").on("click", function() {
         alreadyClicked = true;
     } else if (alreadyClicked != true) {
         $(this).addClass("btn-danger");
+        /* $("[value=Snoop Dogg]").addClass("btn-success");
         var myButtons = $(".btn");
         console.log(myButtons);
         for (i = 0; i < myButtons.length; i++) {
-            if (myButtons.attr("value", newAnswers[i]) === randQuestion.answers[0]) {
-                console.log("that is not correct");
-
-            }
-        }
+            $("[value=Snoop Dogg]").addClass("btn-success");
+        }; */
         wrongAnswers++;
         $("#wrong").text(wrongAnswers);
         alreadyClicked = true;
-
+        timer;
     };
 });
 
-// Ask question and start timer when the page is loaded
-window.onload = function() {
-    showQuestion();
-  };
-
 // Timer that will count down and display time left
 var timerQ = setInterval(function() {
+    clearTimeout(timer);
     questionTimer--;
     $("#timer").text(questionTimer);
 
@@ -119,6 +110,7 @@ var timerQ = setInterval(function() {
 }, 1000);
 
 var timer = setInterval(function() {
+    clearTimeout(timerQ);
     answerTimer--;
     $("timer").text(answerTimer);
     if (answerTimer === 0) {
@@ -127,6 +119,11 @@ var timer = setInterval(function() {
     };
 }, 1000);
 
-// If question is answered before timer reaches zero, the answer page is displayed and user gets question right
+// Ask question and start timer when the page is loaded
+showQuestion();
+
+// If question is answered correctly before timer reaches zero reset timer
 
 // Once the user has answered all questions a final page is displayed
+
+});
