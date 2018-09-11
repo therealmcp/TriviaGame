@@ -18,9 +18,11 @@ h2 {
 }
 
 .row {
-    text-align: center;
-    align-self: center;
-    font-size: 26px;
     background: rgb(109, 109, 156);
     margin: 5%;
+}
+
+.btn {
+    font-size: 25px;
+    width: 45%;
 }
