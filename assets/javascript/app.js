@@ -2,10 +2,10 @@
 $(document).ready(function() {
     
 // Global variables
-var questionTimer = 10;
+var questionTimer = 30;
 var answerTimer = 5;
-var correctAnswers = 0;
-var wrongAnswers = 0;
+var correctAnswers = [];
+var wrongAnswers = [];
 
 var questions = [
     question1 = {
@@ -77,9 +77,14 @@ $(".btn").on("click", function() {
         correctAnswers++;
         $("#correct").text(correctAnswers);
         alreadyClicked = true;
-        setTimeout("showQuestion()", 1000);
+        setTimeout("showQuestion()", 1000); // Error: showQuestion isn't defined?
+        correctAnswers.push(randQuestion); // Error: this isn't a function?
+
     } else if (alreadyClicked != true) {
         $(this).addClass("btn-danger");
+        $("#question").text("The answer was " + randQuestion.answers[0]);
+        clearTimeout(timerQ);
+
         /* $("[value=Snoop Dogg]").addClass("btn-success");
         var myButtons = $(".btn");
         console.log(myButtons);
@@ -88,6 +93,7 @@ $(".btn").on("click", function() {
         }; */
         wrongAnswers++;
         $("#wrong").text(wrongAnswers);
+        wrongAnswers.push(randQuestion); // Error: this isn't a function?
         alreadyClicked = true;
         timer;
     };
@@ -99,10 +105,11 @@ var timerQ = setInterval(function() {
     questionTimer--;
     $("#timer").text(questionTimer);
 
-    // If timer reaches zero go to next thing
+    // If timer reaches zero go to next question
     if (questionTimer === 0) {
         clearTimeout(timerQ);
-        timer;
+        $("#question").text("The answer was " + randQuestion.answers[0]);
+
     };
 }, 1000);
 
