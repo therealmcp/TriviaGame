@@ -51,9 +51,7 @@ function shuffle(array) {
 // Shuffle answers of chosen question
 newAnswers = shuffle(questAnswers);
 
-
-
-var showQuestion = function() {
+function showQuestion() {
     $("#question").text(randQuestion.question);
     $("#firstChoice").attr("value", newAnswers[0]).text(newAnswers[0]);
     $("#secondChoice").attr("value", newAnswers[1]).text(newAnswers[1]);
@@ -66,7 +64,6 @@ var showQuestion = function() {
         }
     } */
     timerQ;
-    
 };
 
 // Prevent multiple clicks
@@ -76,11 +73,11 @@ var alreadyClicked = false;
 $(".btn").on("click", function() {
     var clicked = $(this).html();
     if (clicked === randQuestion.answers[0] && alreadyClicked != true) {
-        console.log("correct");
         $(this).addClass("btn-success");
         correctAnswers++;
         $("#correct").text(correctAnswers);
         alreadyClicked = true;
+        setTimeout("showQuestion()", 1000);
     } else if (alreadyClicked != true) {
         $(this).addClass("btn-danger");
         /* $("[value=Snoop Dogg]").addClass("btn-success");
@@ -102,7 +99,7 @@ var timerQ = setInterval(function() {
     questionTimer--;
     $("#timer").text(questionTimer);
 
-    // If timer reaches zero, the answer page is displayed and player gets question wrong
+    // If timer reaches zero go to next thing
     if (questionTimer === 0) {
         clearTimeout(timerQ);
         timer;
