@@ -4,10 +4,8 @@ $(document).ready(function() {
 // Global variables
 var questionTimer = 30;
 var answerTimer = 5;
-var correctAnswers = 0;
-var wrongAnswers = 0;
-var correctAnswersList = [];
-var wrongAnswersList = [];
+var correctAnswers = [];
+var wrongAnswers = [];
 
 var questions = [
     question1 = {
@@ -27,8 +25,8 @@ var questions = [
 ];
 
 // Choose a question at random
-var randQuestion = questions[Math.floor(Math.random() * questions.length)];
-
+/* var randQuestion = questions[Math.floor(Math.random() * questions.length)];
+ */
 // Pull rand question from array once it's been used.
 
 // Array of the answers for the question chosen and displayed by program
@@ -53,13 +51,18 @@ function shuffle(array) {
 // Shuffle answers of chosen question
 newAnswers = shuffle(questAnswers);
 
-var showQuestion = function() {
+var showQuestion1 = function() {
     $("#question").text(randQuestion.question);
     $("#firstChoice").attr("value", newAnswers[0]).text(newAnswers[0]);
     $("#secondChoice").attr("value", newAnswers[1]).text(newAnswers[1]);
     $("#thirdChoice").attr("value", newAnswers[2]).text(newAnswers[2]);
     $("#fourthChoice").attr("value", newAnswers[3]).text(newAnswers[3]);
-
+/*     for (i = 0; i > newAnswers.length; i++) {
+        var button = $(".btn").text()
+        if(newAnswers[i] === randQuestion.answers[0]) {
+            var correctButton = button;
+        }
+    } */
     timerQ;
 };
 
@@ -74,31 +77,23 @@ $(".btn").on("click", function() {
         correctAnswers++;
         $("#correct").text(correctAnswers);
         alreadyClicked = true;
-        setTimeout(showQuestion, 1000);
-        correctAnswersList.push(randQuestion);
+        setTimeout("showQuestion()", 1000); // Error: showQuestion isn't defined?
+        correctAnswers.push(randQuestion); // Error: this isn't a function?
         questions.shift(randQuestion);
-        clearTimeout(timerQ);
-        timer;
     } else if (alreadyClicked != true) {
         $(this).addClass("btn-danger");
         $("#question").text("The answer was " + randQuestion.answers[0]);
         clearTimeout(timerQ);
 
-        //what this does, finds all elements with class of button, and construct an array from them.
-        let answers = Array.from($('.btn'));
-        // console.log(answers);
-
-        //loop through those elements and check to see if their innerHTML is equal to the correct answer. If we find a match, add a class.
-        //make a function that resets a round and calls it here after some delay
-        
-        for(let idx = 0; idx < answers.length; idx++){
-            if(answers[idx].innerHTML === randQuestion.answers[0]){
-                answers[idx].classList.add("btn-success");
-            }
-        }
+        /* $("[value=Snoop Dogg]").addClass("btn-success");
+        var myButtons = $(".btn");
+        console.log(myButtons);
+        for (i = 0; i < myButtons.length; i++) {
+            $("[value=Snoop Dogg]").addClass("btn-success");
+        }; */
         wrongAnswers++;
         $("#wrong").text(wrongAnswers);
-        wrongAnswersList.push(randQuestion);
+        wrongAnswers.push(randQuestion); // Error: this isn't a function?
         alreadyClicked = true;
         timer;
     };
@@ -119,23 +114,17 @@ var timerQ = setInterval(function() {
 }, 1000);
 
 var timer = setInterval(function() {
-    console.log("timer running");
     clearTimeout(timerQ);
     answerTimer--;
-    $("#timer").text(answerTimer);
-    timerCheckHandler();
-}, 1000);
-function timerCheckHandler(){
+    $("timer").text(answerTimer);
     if (answerTimer === 0) {
+        clearTimeout(timer);
         showQuestion();
-        clearInterval(timer);
-        // reset game
     };
-}
-
+}, 1000);
 
 // Ask question and start timer when the page is loaded
-showQuestion();
+showQuestion1();
 
 // If question is answered correctly before timer reaches zero reset timer
 
